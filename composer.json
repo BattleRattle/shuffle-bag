@@ -1,0 +1,14 @@
+{
+    "name": "battlerattle/shuffle-bag",
+    "description": "Shuffle Bag for better random distribution",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Norman Soetbeer",
+            "email": "norman.soetbeer@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-0": { "BattleRattle\\ShuffleBag": "src/" }
+    }
+}
