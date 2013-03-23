@@ -22,7 +22,14 @@ class ShuffleBagTest extends \PHPUnit_Framework_TestCase
             ->method('next')
             ->will($this->returnValue(0));
 
-        $this->bag = new ShuffleBag($numberGeneratorMock);
+        $this->bag = new ShuffleBag(null, $numberGeneratorMock);
+    }
+
+    public function testAddNonScalarItem()
+    {
+        $this->setExpectedException('InvalidArgumentException');
+
+        $this->bag->add(new \stdClass(), 3);
     }
 
     public function testAddNegativeAmount()

@@ -4,29 +4,31 @@ namespace BattleRattle\ShuffleBag;
 
 use BattleRattle\ShuffleBag\NumberGenerator\NumberGeneratorInterface;
 use BattleRattle\ShuffleBag\NumberGenerator\RandomNumberGenerator;
+use BattleRattle\ShuffleBag\Persistence\ArrayStorage;
+use BattleRattle\ShuffleBag\Persistence\StorageInterface;
 
 class ShuffleBag
 {
     private $numberGenerator;
-    private $items;
-    private $currentPosition = -1;
+    private $storage;
 
     /**
      * Constructor.
      *
+     * @param Persistence\StorageInterface $storage
      * @param NumberGenerator\NumberGeneratorInterface $numberGenerator
      * @internal param \BattleRattle\ShuffleBag\NumberGenerator\RandomNumberGenerator|null $random A random number generator.
      */
-    public function __construct(NumberGeneratorInterface $numberGenerator = null)
+    public function __construct(StorageInterface $storage = null, NumberGeneratorInterface $numberGenerator = null)
     {
-        $this->items = new \SplFixedArray();
+        $this->storage = $storage ?: new ArrayStorage();
         $this->numberGenerator = $numberGenerator ?: new RandomNumberGenerator();
     }
 
     /**
      * Add an item with certain amount.
      *
-     * @param mixed $item The item to add.
+     * @param scalar $item The item to add.
      * @param integer $amount The amount to add.
      *
      * @throws \InvalidArgumentException
@@ -34,64 +36,50 @@ class ShuffleBag
      */
     public function add($item, $amount)
     {
+        if (!is_scalar($item)) {
+            throw new \InvalidArgumentException('The item must be scalar');
+        }
+
         if ($amount < 1) {
             throw new \InvalidArgumentException('The amount must be a positive number');
         }
 
-        $bagSize = $this->items->getSize();
-        $this->resize($bagSize + $amount);
-
-        for ($i = 0; $i < $amount; $i++) {
-            $this->items[$bagSize + $i] = $item;
-        }
+        $items = array_fill(0, $amount, $item);
+        $this->storage->appendItems($items);
 
         return $this;
     }
 
     /**
-     * {@inheritdoc}
+     * Get the next item from bag.
+     *
+     * return scalar
      */
     public function next()
     {
-        if ($this->items->getSize() < 1) {
-            throw new \LogicException('At least one item must be added before requesting a random item');
+        $maxOffset = $this->storage->getCurrentPosition();
+
+        if ($maxOffset == -1) {
+            throw new \LogicException('Cannot fetch an item from empty bag.');
         }
 
-        if ($this->currentPosition < 1) {
-            $this->currentPosition = $this->items->getSize() - 1;
+        if ($maxOffset == 0) {
+            $item = $this->storage->getItem(0);
+            $size = $this->storage->getItemCount();
+            $this->storage->setCurrentPosition($size - 1);
 
-            return $this->items[0];
+            return $item;
         }
 
-        $randomOffset = (int) ($this->numberGenerator->next() * $this->currentPosition);
+        $multiplier = $this->numberGenerator->next();
+        $offset = (int) ($multiplier * $maxOffset);
+        $item = $this->storage->getItem($offset);
 
-        return $this->pickItem($randomOffset);
-    }
+        if ($offset < $maxOffset) {
+            $this->storage->swapItems($offset, $maxOffset);
+        }
 
-    /**
-     * Resize the bag.
-     *
-     * @param integer $newSize The new bag size.
-     */
-    private function resize($newSize)
-    {
-        $this->items->setSize($newSize);
-        $this->currentPosition = $newSize - 1;
-    }
-
-    /**
-     * Pick an item.
-     *
-     * @param integer $index The item index to use.
-     * @return mixed
-     */
-    private function pickItem($index)
-    {
-        $item = $this->items[$index];
-        $this->items[$index] = $this->items[$this->currentPosition];
-        $this->items[$this->currentPosition] = $item;
-
-        $this->currentPosition--;
+        $this->storage->setCurrentPosition($maxOffset - 1);
 
         return $item;
     }
