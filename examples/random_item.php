@@ -20,7 +20,7 @@ $items = array(
 
 $shuffleBag = new ShuffleBag();
 
-// Since we use decimal numbers with 2 decimal places, we will multiply the occurrences by 100.
+// Since we use decimal numbers with up to 2 decimal places, we will multiply the occurrences by 100.
 foreach ($items as $itemId => $probability) {
     $shuffleBag->add($itemId, $probability * 100);
 }

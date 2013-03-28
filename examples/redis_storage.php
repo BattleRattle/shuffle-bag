@@ -7,13 +7,12 @@ use BattleRattle\ShuffleBag\Persistence\RedisStorage;
 use Predis\Client;
 
 $client = new Client();
-$storage = new RedisStorage($client, 'player:12345:pickup-items');
-$storage = new \BattleRattle\ShuffleBag\Persistence\ArrayStorage();
+$storage = new RedisStorage($client, 'player:123:pickup-items');
 $bag = new ShuffleBag($storage);
 
-$bag->add('item 1', 2);
-$bag->add('item 2', 2);
-$bag->add('item 3', 2);
+$bag->add('item 1', 1);
+$bag->add('item 2', 5);
+$bag->add('item 3', 10);
 
 $item = $bag->next();
 var_dump($item);

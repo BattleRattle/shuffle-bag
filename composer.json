@@ -10,5 +10,8 @@
     ],
     "autoload": {
         "psr-0": { "BattleRattle\\ShuffleBag": "src/" }
+    },
+    "suggest": {
+        "predis/predis": "Allows Redis to be used as storage"
     }
 }

@@ -53,6 +53,11 @@ class RedisStorage extends AbstractStorage
         $this->key = $key;
     }
 
+    /**
+     * Make sure, the Redis keys exist.
+     *
+     * @return void
+     */
     private function initializeRedis()
     {
         if ($this->initialized) {
@@ -159,11 +164,21 @@ class RedisStorage extends AbstractStorage
         $this->currentPosition = $index;
     }
 
+    /**
+     * Build the Redis key for the item list.
+     *
+     * @return string
+     */
     private function getKeyForItemList()
     {
         return sprintf('%s:%s:items', $this->key, $this->hash);
     }
 
+    /**
+     * Build the Redis key for the current position.
+     *
+     * @return string
+     */
     private function getKeyForCurrentPosition()
     {
         return sprintf('%s:%s:currentPosition', $this->key, $this->hash);
