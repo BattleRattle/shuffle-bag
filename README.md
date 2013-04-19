@@ -22,9 +22,9 @@ Usage
 Here we implement the example as described above:
 
 ```php
-use BattleRattle\ShuffleBag\ShuffleBag;
+use BattleRattle\ShuffleBag\ArrayShuffleBag;
 
-$bag = new ShuffleBag();
+$bag = new ArrayShuffleBag();
 
 // add your items with a certain probability
 $bag->add('item 1', 1);
@@ -34,3 +34,20 @@ $bag->add('item 3', 6);
 // pick a random item
 $item = $bag->next();
 ```
+
+If you want to use a persistent storage like Redis (we use [Predis](https://github.com/nrk/predis) here):
+
+```php
+use BattleRattle\ShuffleBag\PersistentShuffleBag;
+use BattleRattle\ShuffleBag\Storage\RedisStorage;
+use Predis\Client;
+
+$redisClient = new Client();
+$storage = new RedisStorage($redisClient);
+$bag = new PersistentShuffleBag($storage);
+
+$bag->add('foo', 42);
+$bag->add('bar', 1337);
+
+$item = $bag->next();
+``
