@@ -13,7 +13,7 @@
 >
     <testsuites>
         <testsuite name="Shuffle Bag Component Test Suite">
-            <directory>./Tests/</directory>
+            <directory>./tests/</directory>
         </testsuite>
     </testsuites>
 
@@ -22,7 +22,7 @@
             <directory>./</directory>
             <exclude>
                 <directory>./vendor</directory>
-                <directory>./Tests</directory>
+                <directory>./tests</directory>
             </exclude>
         </whitelist>
     </filter>
