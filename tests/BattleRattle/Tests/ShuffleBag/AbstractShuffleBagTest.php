@@ -4,33 +4,12 @@ namespace BattleRattle\Tests\ShuffleBag;
 
 use BattleRattle\ShuffleBag\ShuffleBag;
 
-class ShuffleBagTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractShuffleBagTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var ShuffleBag
      */
-    private $bag;
-
-    public function setUp()
-    {
-        // Create a faked number generator in order to make sure, the tests won't succeed or fail randomly
-        $numberGeneratorMock = $this->getMockBuilder('BattleRattle\\ShuffleBag\\NumberGenerator\\AbstractNumberGenerator')
-            ->setMethods(array('next'))
-            ->getMockForAbstractClass();
-
-        $numberGeneratorMock->expects($this->any())
-            ->method('next')
-            ->will($this->returnValue(0));
-
-        $this->bag = new ShuffleBag(null, $numberGeneratorMock);
-    }
-
-    public function testAddNonScalarItem()
-    {
-        $this->setExpectedException('InvalidArgumentException');
-
-        $this->bag->add(new \stdClass(), 3);
-    }
+    protected $bag;
 
     public function testAddNegativeAmount()
     {
@@ -48,9 +27,10 @@ class ShuffleBagTest extends \PHPUnit_Framework_TestCase
 
     public function testPickSingleItem()
     {
-        $this->bag->add('item 1', 1);
-        $this->bag->add('item 2', 1);
-        $this->bag->add('item 3', 1);
+        $this->bag
+            ->add('item 1', 1)
+            ->add('item 2', 1)
+            ->add('item 3', 1);
 
         $item = $this->bag->next();
 
@@ -59,9 +39,10 @@ class ShuffleBagTest extends \PHPUnit_Framework_TestCase
 
     public function testItemDistribution()
     {
-        $this->bag->add('item 1', 5);
-        $this->bag->add('item 2', 10);
-        $this->bag->add('item 3', 20);
+        $this->bag
+            ->add('item 1', 5)
+            ->add('item 2', 10)
+            ->add('item 3', 20);
 
         $actualItemCounts = array('item 1' => 0, 'item 2' => 0, 'item 3' => 0);
         for ($i = 0; $i < 35; $i++) {

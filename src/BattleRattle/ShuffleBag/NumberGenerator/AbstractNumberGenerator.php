@@ -2,7 +2,7 @@
 
 namespace BattleRattle\ShuffleBag\NumberGenerator;
 
-abstract class AbstractNumberGenerator implements NumberGeneratorInterface
+abstract class AbstractNumberGenerator implements NumberGenerator
 {
     /**
      * {@inheritdoc}

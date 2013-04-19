@@ -1,6 +1,6 @@
 <?php
 
-namespace BattleRattle\ShuffleBag\Persistence;
+namespace BattleRattle\ShuffleBag\Storage;
 
 use Predis\Client;
 
@@ -14,7 +14,7 @@ class RedisStorage extends AbstractStorage
     /**
      * @var string
      */
-    private $key;
+    private $prefix;
 
     /**
      * @var string
@@ -45,12 +45,12 @@ class RedisStorage extends AbstractStorage
      * Constructor.
      *
      * @param Client $redis Redis client.
-     * @param string $key The key for bag identification.
+     * @param string $prefix The key for bag identification.
      */
-    public function __construct(Client $redis, $key)
+    public function __construct(Client $redis, $prefix = '')
     {
         $this->redis = $redis;
-        $this->key = $key;
+        $this->prefix = $prefix;
     }
 
     /**
@@ -69,9 +69,9 @@ class RedisStorage extends AbstractStorage
         $positionKey = $this->getKeyForCurrentPosition();
         $existing = !$this->redis->setnx($positionKey, count($this->items) - 1);
 
-        if (!$existing) {
+        if (!$existing && count($this->items)) {
             $listKey = $this->getKeyForItemList();
-            $this->itemCount = $this->redis->lpush($listKey, $this->items);
+            $this->itemCount = $this->redis->rpush($listKey, $this->items);
         }
 
         $this->initialized = true;
@@ -146,7 +146,7 @@ class RedisStorage extends AbstractStorage
 
         if ($this->currentPosition === null) {
             $key = $this->getKeyForCurrentPosition();
-            $this->currentPosition = $this->redis->get($key);
+            $this->currentPosition = (int) $this->redis->get($key);
         }
 
         return $this->currentPosition;
@@ -165,13 +165,23 @@ class RedisStorage extends AbstractStorage
     }
 
     /**
+     * Get the prefix with trailing colon or empty string.
+     *
+     * @return string
+     */
+    private function getPrefix()
+    {
+        return $this->prefix ? $this->prefix . ':' : '';
+    }
+
+    /**
      * Build the Redis key for the item list.
      *
      * @return string
      */
     private function getKeyForItemList()
     {
-        return sprintf('%s:%s:items', $this->key, $this->hash);
+        return sprintf('%s%s:items', $this->getPrefix(), $this->hash);
     }
 
     /**
@@ -181,6 +191,6 @@ class RedisStorage extends AbstractStorage
      */
     private function getKeyForCurrentPosition()
     {
-        return sprintf('%s:%s:currentPosition', $this->key, $this->hash);
+        return sprintf('%s%s:currentPosition', $this->getPrefix(), $this->hash);
     }
 }

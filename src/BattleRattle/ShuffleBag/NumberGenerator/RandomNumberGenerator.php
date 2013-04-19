@@ -4,8 +4,11 @@ namespace BattleRattle\ShuffleBag\NumberGenerator;
 
 class RandomNumberGenerator extends AbstractNumberGenerator
 {
+    /**
+     * {@inheritdoc}
+     */
     public function next()
     {
-        return mt_rand() / mt_getrandmax();
+        return lcg_value();
     }
 }

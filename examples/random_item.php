@@ -6,7 +6,7 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use BattleRattle\ShuffleBag\ShuffleBag;
+use BattleRattle\ShuffleBag\ArrayShuffleBag;
 
 // Item IDs with their probabilities to be used
 $items = array(
@@ -18,7 +18,7 @@ $items = array(
     6 => 0.05,
 );
 
-$shuffleBag = new ShuffleBag();
+$shuffleBag = new ArrayShuffleBag();
 
 // Since we use decimal numbers with up to 2 decimal places, we will multiply the occurrences by 100.
 foreach ($items as $itemId => $probability) {

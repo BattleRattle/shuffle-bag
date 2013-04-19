@@ -1,10 +1,10 @@
 <?php
 
-namespace BattleRattle\ShuffleBag\Persistence;
+namespace BattleRattle\ShuffleBag\Storage;
 
-abstract class AbstractStorage implements StorageInterface
+abstract class AbstractStorage implements Storage
 {
-    protected $currentPosition = -1;
+    protected $currentPosition = Storage::EMPTY_BAG_STORAGE;
 
     /**
      * {@inheritdoc}

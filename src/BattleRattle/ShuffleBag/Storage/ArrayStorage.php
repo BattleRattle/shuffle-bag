@@ -1,6 +1,6 @@
 <?php
 
-namespace BattleRattle\ShuffleBag\Persistence;
+namespace BattleRattle\ShuffleBag\Storage;
 
 class ArrayStorage extends AbstractStorage
 {

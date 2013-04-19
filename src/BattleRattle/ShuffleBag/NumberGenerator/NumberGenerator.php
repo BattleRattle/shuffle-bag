@@ -2,10 +2,10 @@
 
 namespace BattleRattle\ShuffleBag\NumberGenerator;
 
-interface NumberGeneratorInterface
+interface NumberGenerator
 {
     /**
-     * Get the next generated number between 0 and 1.
+     * Get the next generated number between 0 and 1 (inclusively).
      *
      * @return float
      */

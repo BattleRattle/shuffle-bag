@@ -1,9 +1,11 @@
 <?php
 
-namespace BattleRattle\ShuffleBag\Persistence;
+namespace BattleRattle\ShuffleBag\Storage;
 
-interface StorageInterface
+interface Storage
 {
+    const EMPTY_BAG_STORAGE = -1;
+
     /**
      * Append one or more items to the bag.
      *
