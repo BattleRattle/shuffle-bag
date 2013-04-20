@@ -37,7 +37,8 @@ $bag->add('item 3', 6);
 $item = $bag->next();
 ```
 
-If you want to use a persistent storage like Redis (we use [Predis](https://github.com/nrk/predis) here):
+In order to use the same bag over multiple requests, you need to store the bag in a persistent storage.
+Here we use the PersistentShuffleBag with Redis as storage:
 
 ```php
 use BattleRattle\ShuffleBag\PersistentShuffleBag;
