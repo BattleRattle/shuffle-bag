@@ -14,6 +14,9 @@
             "BattleRattle\\Tests\\ShuffleBag": "tests/"
         }
     },
+    "require-dev": {
+        "predis/predis": "0.8.*"
+    },
     "suggest": {
         "predis/predis": "Allows Redis to be used as storage"
     }
