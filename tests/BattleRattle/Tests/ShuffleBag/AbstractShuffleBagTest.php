@@ -37,7 +37,10 @@ abstract class AbstractShuffleBagTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(in_array($item, array('item 1', 'item 2', 'item 3')), 'The picked item should be one of the added ones.');
     }
 
-    public function testItemDistribution()
+    /**
+     * @dataProvider provideRuns
+     */
+    public function testItemDistribution($runs)
     {
         $this->bag
             ->add('item 1', 5)
@@ -45,17 +48,25 @@ abstract class AbstractShuffleBagTest extends \PHPUnit_Framework_TestCase
             ->add('item 3', 20);
 
         $actualItemCounts = array('item 1' => 0, 'item 2' => 0, 'item 3' => 0);
-        for ($i = 0; $i < 35; $i++) {
+        for ($i = 0; $i < 35 * $runs; $i++) {
             $item = $this->bag->next();
             $actualItemCounts[$item]++;
         }
 
         $expectedCounts = array(
-            'item 1' => 5,
-            'item 2' => 10,
-            'item 3' => 20
+            'item 1' => 5 * $runs,
+            'item 2' => 10 * $runs,
+            'item 3' => 20 * $runs,
         );
 
         $this->assertEquals($expectedCounts, $actualItemCounts, 'The picked item counts should equal the targeted ones.');
+    }
+
+    public function provideRuns()
+    {
+        return array(
+            array(1), // pick each item exactly once
+            array(3), // pick each item exactly three times, requires the bag to be refilled
+        );
     }
 }

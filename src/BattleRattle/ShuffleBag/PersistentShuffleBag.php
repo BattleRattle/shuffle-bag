@@ -4,7 +4,6 @@ namespace BattleRattle\ShuffleBag;
 
 use BattleRattle\ShuffleBag\NumberGenerator\NumberGenerator;
 use BattleRattle\ShuffleBag\NumberGenerator\RandomNumberGenerator;
-use BattleRattle\ShuffleBag\Storage\ArrayStorage;
 use BattleRattle\ShuffleBag\Storage\Storage;
 
 class PersistentShuffleBag implements ShuffleBag
@@ -25,9 +24,9 @@ class PersistentShuffleBag implements ShuffleBag
      * @param Storage $storage
      * @param NumberGenerator $numberGenerator
      */
-    public function __construct(Storage $storage = null, NumberGenerator $numberGenerator = null)
+    public function __construct(Storage $storage, NumberGenerator $numberGenerator = null)
     {
-        $this->storage = $storage ?: new ArrayStorage();
+        $this->storage = $storage;
         $this->numberGenerator = $numberGenerator ?: new RandomNumberGenerator();
     }
 

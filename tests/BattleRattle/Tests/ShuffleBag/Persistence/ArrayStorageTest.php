@@ -2,7 +2,7 @@
 
 namespace BattleRattle\Tests\ShuffleBag\Persistence;
 
-use BattleRattle\ShuffleBag\Storage\ArrayStorage;
+use BattleRattle\Tests\ShuffleBag\Helper\ArrayStorage;
 
 class ArrayStorageTest extends AbstractStorageTest
 {
