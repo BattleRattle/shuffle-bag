@@ -52,4 +52,4 @@ $bag->add('foo', 42);
 $bag->add('bar', 1337);
 
 $item = $bag->next();
-``
+```
