@@ -67,7 +67,7 @@ class ArrayShuffleBag implements ShuffleBag
             return $this->items[0];
         }
 
-        $maxOffset = $this->items->getSize() - 1;
+        $maxOffset = $this->currentPosition;
         $randomOffset = (int) ($this->generator->next() * $maxOffset);
         $item = $this->items[$randomOffset];
 
