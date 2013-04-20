@@ -1,6 +1,8 @@
 Shuffle Bag
 ===========
 
+Build status: [![Build Status](https://travis-ci.org/BattleRattle/shuffle-bag.png?branch=master)](https://travis-ci.org/BattleRattle/shuffle-bag)
+
 This is a Shuffle Bag implementation, highly inspired by [this nice article](http://gamedev.tutsplus.com/tutorials/implementation/shuffle-bags-making-random-feel-more-random/) and its C# example.
 
 What is a Shuffle Bag?
