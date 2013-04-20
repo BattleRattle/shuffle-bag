@@ -9,4 +9,4 @@ services:
   - redis-server
 
 before_script:
-  - composer require nrk/predis:0.8.*
+  - composer require predis/predis:0.8.*
