@@ -3,6 +3,8 @@ Shuffle Bag
 
 Build status: [![Build Status](https://travis-ci.org/BattleRattle/shuffle-bag.png?branch=master)](https://travis-ci.org/BattleRattle/shuffle-bag)
 
+Packagist: [battlerattle/shuffle-bag](https://packagist.org/packages/battlerattle/shuffle-bag)
+
 This is a Shuffle Bag implementation, highly inspired by [this nice article](http://gamedev.tutsplus.com/tutorials/implementation/shuffle-bags-making-random-feel-more-random/) and its C# example.
 
 What is a Shuffle Bag?
@@ -11,6 +13,20 @@ What is a Shuffle Bag?
 A Shuffle Bag can be used for picking random items while reaching the targeted distribution after max. X picks, where X means the sum of all amounts the items were added.
 
 The Shuffle Bag could be used in games in order to provide a certain amount of randomness while having the guarantee to keep the game balanced at the same time.
+
+Installation
+------------
+
+The easiest way to install this library is to use [Composer](http://getcomposer.org/)
+Add the package "battlerattle/shuffle-bag" to your composer.json
+
+```json
+{
+    "require": {
+        "battlerattle/shuffle-bag": "v1.0-beta"
+    }
+}
+```
 
 Example
 -------
@@ -38,7 +54,7 @@ $item = $bag->next();
 ```
 
 In order to use the same bag over multiple requests, you need to store the bag in a persistent storage.
-Here we use the PersistentShuffleBag with Redis as storage:
+Here we use the PersistentShuffleBag with Redis ([Predis](https://github.com/nrk/predis)) as storage:
 
 ```php
 use BattleRattle\ShuffleBag\PersistentShuffleBag;
