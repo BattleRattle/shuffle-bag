@@ -3,7 +3,9 @@ Shuffle Bag
 
 Build status: [![Build Status](https://travis-ci.org/BattleRattle/shuffle-bag.png?branch=master)](https://travis-ci.org/BattleRattle/shuffle-bag)
 
-Packagist: [battlerattle/shuffle-bag](https://packagist.org/packages/battlerattle/shuffle-bag)
+Scrutinizer: [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/BattleRattle/shuffle-bag/badges/quality-score.png?s=962243106c95fc7d7a341ee562475194aaffe777)](https://scrutinizer-ci.com/g/BattleRattle/shuffle-bag/)
+
+Packagist: [![Latest Stable Version](https://poser.pugx.org/battlerattle/shuffle-bag/v/stable.png)](https://packagist.org/packages/battlerattle/shuffle-bag)
 
 This is a Shuffle Bag implementation, highly inspired by [this nice article](http://gamedev.tutsplus.com/tutorials/implementation/shuffle-bags-making-random-feel-more-random/) and its C# example.
 
